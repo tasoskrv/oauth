@@ -1,24 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Login from './presentation/components/Login';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import SignUp from './presentation/components/SignUp';
+import LoginRepositoryImpl from './infrastructure/apis/LoginRepositoryImpl';
+import LoginUsecase from './domain/LoginUsecase';
 
 function App() {
+  debugger;
+  const repo = new LoginRepositoryImpl(); 
+  const usecase = new LoginUsecase(repo);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{margin:'auto', width:500}}>
+      <Router>
+        <Link to="/">Login</Link>
+        <Link to="/signup">SignUp</Link>
+        <br/><br/>
+
+        <Routes>
+            <Route path="/" element={<Login usecase={usecase}/>}/>                                                   
+            <Route path="signup" element={<SignUp/>} />
+        </Routes>
+      </Router>
     </div>
   );
 }
