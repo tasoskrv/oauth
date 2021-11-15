@@ -1,12 +1,14 @@
-import RequestApis from "../infrastructure/apis/RequestApis";
-import {Action, ActionCreator, Dispatch} from 'redux';
-import {ThunkAction} from 'redux-thunk';
-import axios from "axios";
+import {Action, Dispatch} from 'redux';
+import LoginEntity from "../domain/LoginEntity";
+import LoginUsecase from "../domain/LoginUsecase";
 
-export const loginRequest = (email : any, password : string) => {
+export const loginRequest = (usecase : LoginUsecase, email : any, password : string) => {
     debugger;
     return async (dispatch : Dispatch<Action>, getState:any)=>{
-        const response = await RequestApis.post('',{email,password});        
+
+        debugger;
+        const lll = new LoginEntity(email, password);
+        const response = await usecase.loginUser(lll);
         debugger;
         dispatch({
             type    : 'LOGIN_USER',
@@ -15,25 +17,3 @@ export const loginRequest = (email : any, password : string) => {
     }
 }
 
-/*
-export const getComments = (postId: string) => {
-    debugger;
-    return async (dispatch: Dispatch<Action>) => {
-debugger;
-        try {
-            const { data } = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`);
-
-            dispatch({
-                type: "GET_POST_COMMENTS_SUCCESS",
-                payload: data  
-            });
-
-        } catch(err) {
-            dispatch({
-                type: "GET_POST_COMMENTS_FAIL",
-                payload: err
-            });
-        }
-    }
-} 
-*/

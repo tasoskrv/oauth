@@ -1,11 +1,15 @@
 import LoginEntity from "../../domain/LoginEntity";
 import LoginRepository from "../../domain/LoginRepository";
+import RequestApis from "./RequestApis";
 
 export default class LoginRepositoryImpl implements LoginRepository{
-    login(loginEntity: LoginEntity): Promise<any> {
-        const a:any = ""; 
-        console.log(loginEntity.email, loginEntity.password);
-        return a;
+    async login(loginEntity: LoginEntity): Promise<any> {        
+        const response = await RequestApis.post('',{
+            email    : loginEntity.email,
+            password : loginEntity.password
+        });
+        console.log(response);
+        return response;
     }
 
 }

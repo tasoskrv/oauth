@@ -1,18 +1,8 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useState } from "react";
 import { loginRequest } from "../../actions";
-//import { getComments } from "../../actions";
-import LoginEntity from "../../domain/LoginEntity";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../reducers";
 
-// import { ThunkDispatch } from "redux-thunk";
-// import { AnyAction } from "redux";
-
-// type State = { a: string }; // your state type
-// type AppDispatch = ThunkDispatch<State, any, AnyAction>; 
-
-//const Login = ({usecase, loginData, loginRequest}:{usecase:any, loginData:any, loginRequest:any})=>{
 const Login = ({usecase}:{usecase:any})=>{
     debugger;
     const [email, setEmail] = useState("");
@@ -22,13 +12,8 @@ const Login = ({usecase}:{usecase:any})=>{
     const dispatch = useDispatch();
 
     const onLogin = (email : string, password:string)=>{
-        /*
-        const lll = new LoginEntity(email, password);        
-        usecase.loginUser(lll)
-        */
-        dispatch(loginRequest(email, password));
-        //dispatch(getComments("1"));
-        //loginRequest(email, password);
+        debugger;
+        dispatch(loginRequest(usecase, email, password));
     };
 
     if(userLogin.token){
@@ -56,11 +41,4 @@ const Login = ({usecase}:{usecase:any})=>{
     );
 }
 
-const mapStateToProps = (state : any)=>{
-    return {
-        loginData : state.login
-    }
-}
-
-//export default connect(mapStateToProps,  {loginRequest})(Login);
 export default Login;

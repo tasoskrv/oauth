@@ -1,4 +1,5 @@
 class LoginEntity {
+
     public email:string;
     public password:string;
 
