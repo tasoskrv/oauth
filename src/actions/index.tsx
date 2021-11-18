@@ -1,13 +1,11 @@
 import {Action, Dispatch} from 'redux';
 import LoginEntity from "../domain/LoginEntity";
-import LoginUsecase from "../domain/LoginUsecase";
+import {LoginUsecase} from "../domain/LoginUsecase";
 
-export const loginRequest = (usecase : LoginUsecase, email : any, password : string) => {
+export const loginRequest = (usecase : LoginUsecase, loginEntity : LoginEntity) => {
     
-    return async (dispatch : Dispatch<Action>, getState:any)=>{
-
-        const lll = new LoginEntity(email, password);
-        const response = await usecase.loginUser(lll);
+    return async (dispatch : Dispatch<Action>, getState:any)=>{    
+        const response = await usecase.loginUser(loginEntity);
 
         dispatch({
             type    : 'LOGIN_USER',

@@ -2,8 +2,11 @@ import { useState } from "react";
 import { loginRequest } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../reducers";
+import { useInjection } from "../../react-binding";
+import LoginEntity from "../../domain/LoginEntity";
+import { LoginUsecase } from "../../domain/LoginUsecase";
 
-const Login = ({usecase}:{usecase:any})=>{
+const Login = ({loginUsecase}:{loginUsecase:LoginUsecase})=>{
     
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -11,9 +14,12 @@ const Login = ({usecase}:{usecase:any})=>{
     const userLogin = useSelector((state: RootState) => state.login);
     const dispatch = useDispatch();
 
-    const onLogin = (email : string, password:string)=>{
-        
-        dispatch(loginRequest(usecase, email, password));
+    const loginEntity = useInjection(LoginEntity);
+
+    const onLogin = (email : string, password:string)=>{        
+        loginEntity.email = email;
+        loginEntity.password = password;
+        dispatch(loginRequest(loginUsecase, loginEntity));
     };
 
     if(userLogin.token){

@@ -26,6 +26,6 @@
       "strictPropertyInitialization": false
     },
     "include": [
-      "src"
-  , "gulpfile.js"  ]
-  }
+      "src", "gulpfile.js"
+    ]
+}
