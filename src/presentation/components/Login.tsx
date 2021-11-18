@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../reducers";
 
 const Login = ({usecase}:{usecase:any})=>{
-    debugger;
+    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -12,7 +12,7 @@ const Login = ({usecase}:{usecase:any})=>{
     const dispatch = useDispatch();
 
     const onLogin = (email : string, password:string)=>{
-        debugger;
+        
         dispatch(loginRequest(usecase, email, password));
     };
 

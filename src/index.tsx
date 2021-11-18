@@ -5,11 +5,20 @@ import { Provider } from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import {reducers} from './reducers';
 
-const store = createStore(reducers, applyMiddleware(thunk));
+import { DateStringService } from './date-string.service';
+import { ContainerProvider } from './react-binding';
+import { Container } from 'inversify';
 
+
+const container = new Container();
+container.bind(DateStringService).toConstantValue(new DateStringService('today is'));
+
+const store = createStore(reducers, applyMiddleware(thunk));
 ReactDOM.render(
   <Provider store={store}>
-      <App/>
+      <ContainerProvider container={container}>
+        <App/>
+      </ContainerProvider>
   </Provider>,        
   document.querySelector('#root')
 );
