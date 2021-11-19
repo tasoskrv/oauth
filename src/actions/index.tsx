@@ -1,6 +1,6 @@
 import {Action, Dispatch} from 'redux';
-import LoginEntity from "../domain/LoginEntity";
-import {LoginUsecase} from "../domain/LoginUsecase";
+import LoginEntity from "../domain/login/LoginEntity";
+import LoginUsecase from "../domain/login/LoginUsecase";
 
 export const loginRequest = (usecase : LoginUsecase, loginEntity : LoginEntity) => {
     

@@ -1,6 +1,6 @@
-import LoginEntity from "../../domain/LoginEntity";
-import LoginRepository from "../../domain/LoginRepository";
-import RequestApis from "./RequestApis";
+import LoginEntity from "../domain/login/LoginEntity";
+import LoginRepository from "../domain/login/LoginRepository";
+import RequestApis from "./apis/RequestApis";
 
 export default class LoginRepositoryImpl implements LoginRepository{
     async login(loginEntity: LoginEntity): Promise<any> {        
@@ -11,5 +11,4 @@ export default class LoginRepositoryImpl implements LoginRepository{
         console.log(response);
         return response;
     }
-
 }

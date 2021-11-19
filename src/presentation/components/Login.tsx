@@ -2,9 +2,9 @@ import { useState } from "react";
 import { loginRequest } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../reducers";
-import { useInjection } from "../../react-binding";
-import LoginEntity from "../../domain/LoginEntity";
-import { LoginUsecase } from "../../domain/LoginUsecase";
+import { useInjection } from "../../di-container";
+import LoginEntity from "../../domain/login/LoginEntity";
+import LoginUsecase from "../../domain/login/LoginUsecase";
 
 const Login = ({loginUsecase}:{loginUsecase:LoginUsecase})=>{
     

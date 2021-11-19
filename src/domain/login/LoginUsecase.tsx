@@ -1,7 +1,7 @@
 import LoginEntity from "./LoginEntity";
 import LoginRepository from "./LoginRepository";
 
-export class LoginUsecase {
+export default class LoginUsecase {
     private loginRepo : LoginRepository;
 
     constructor(loginRepo:LoginRepository){

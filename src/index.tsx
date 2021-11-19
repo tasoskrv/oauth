@@ -5,19 +5,15 @@ import { Provider } from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import {reducers} from './reducers';
 
-//import { DateStringService } from './date-string.service';
-import { ContainerProvider } from './react-binding';
+import { ContainerProvider } from './di-container';
 import { Container } from 'inversify';
-import {LoginUsecase} from './domain/LoginUsecase';
-import LoginRepositoryImpl from './infrastructure/apis/LoginRepositoryImpl';
-import LoginEntity from './domain/LoginEntity';
-
+import LoginUsecase from './domain/login/LoginUsecase';
+import LoginRepositoryImpl from './infrastructure/LoginRepositoryImpl';
+import LoginEntity from './domain/login/LoginEntity';
 
 const container = new Container();
-
 container.bind(LoginEntity).toDynamicValue(context => new LoginEntity("",""));
 container.bind(LoginUsecase).toConstantValue(new LoginUsecase(new LoginRepositoryImpl()));
-//container.bind(DateStringService).toConstantValue(new DateStringService('today is'));
 
 const store = createStore(reducers, applyMiddleware(thunk));
 ReactDOM.render(
