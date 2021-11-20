@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginRequest } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../reducers";
 import { useInjection } from "../../di-container";
 import LoginEntity from "../../domain/login/LoginEntity";
 import LoginUsecase from "../../domain/login/LoginUsecase";
+import { Link } from "react-router-dom";
 
-const Login = ({loginUsecase}:{loginUsecase:LoginUsecase})=>{
+type LoginProps = {
+    loginUsecase:LoginUsecase
+}
+
+const Login = (loginProps:LoginProps)=>{
     
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,7 +24,7 @@ const Login = ({loginUsecase}:{loginUsecase:LoginUsecase})=>{
     const onLogin = (email : string, password:string)=>{        
         loginEntity.email = email;
         loginEntity.password = password;
-        dispatch(loginRequest(loginUsecase, loginEntity));
+        dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
     };
 
     if(userLogin.token){
@@ -27,7 +32,7 @@ const Login = ({loginUsecase}:{loginUsecase:LoginUsecase})=>{
     }
 
     return (
-        <div style={{margin:'auto', width:500}}>
+        <div className="login-wrapper">
             <form>
                 <table>
                     <tbody>
@@ -43,6 +48,7 @@ const Login = ({loginUsecase}:{loginUsecase:LoginUsecase})=>{
                 </table> 
                 <input type="button" value="Login" onClick={()=>onLogin(email, password)}/>
             </form>
+            <Link to="/signup">SignUp</Link>
         </div>
     );
 }

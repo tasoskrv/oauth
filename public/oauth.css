@@ -1,0 +1,10 @@
+.app-body{
+    background-color: #63b2d8;
+}
+
+.wrapper{
+    margin: auto;
+    width: 500px;
+    margin-top: 250px;
+    background: rgb(215, 233, 250);
+}

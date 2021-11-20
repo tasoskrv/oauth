@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import SignUpUsecase from "../../domain/signup/SignUpUsecase";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-const SignUp = ()=>{
+type SignUpProps = {
+
+}
+
+const SignUp = (signUpProps:SignUpProps)=>{
+
     return (
         <div style={{margin:'auto', width:500}}>
             <form>
@@ -21,7 +28,11 @@ const SignUp = ()=>{
                     </tbody>                    
                 </table>          
                 <input type="button" value="Sign Up" />                  
-            </form>
+            </form>            
+            {/* <Router> */}
+                <Link to="/">Login</Link>
+            {/* </Router> */}
+
         </div>
     );
 }

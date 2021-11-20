@@ -10,6 +10,7 @@ import { Container } from 'inversify';
 import LoginUsecase from './domain/login/LoginUsecase';
 import LoginRepositoryImpl from './infrastructure/LoginRepositoryImpl';
 import LoginEntity from './domain/login/LoginEntity';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const container = new Container();
 container.bind(LoginEntity).toDynamicValue(context => new LoginEntity("",""));
