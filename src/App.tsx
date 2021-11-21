@@ -13,9 +13,9 @@ function App() {
 
   return (
     <div className="wrapper">
-      <Container>
-        <Row>
-          <Col>
+      <Container className="h-100">
+        <Row className="h-100">
+          <Col className="first-col p-0">
             <Router>
               <Routes>
                   <Route path="/" element={
@@ -31,7 +31,9 @@ function App() {
               </Routes>          
             </Router>            
           </Col>
-          <Col><img width="20%" src="https://www.thoughtco.com/thmb/6NNZQHeEhR-wNWA8pZrm1MXtrAs=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/clouds-5b6b4e50c9e77c0050491212.jpg"/></Col>
+          <Col className="second-col p-0">
+            <img className="img-background" src="https://www.thoughtco.com/thmb/6NNZQHeEhR-wNWA8pZrm1MXtrAs=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/clouds-5b6b4e50c9e77c0050491212.jpg"/>
+          </Col>
         </Row>
       </Container>
     </div>

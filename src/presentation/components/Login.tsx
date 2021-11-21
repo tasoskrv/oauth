@@ -6,6 +6,8 @@ import { useInjection } from "../../di-container";
 import LoginEntity from "../../domain/login/LoginEntity";
 import LoginUsecase from "../../domain/login/LoginUsecase";
 import { Link } from "react-router-dom";
+import Form from 'react-bootstrap/Form'
+import { Button } from "react-bootstrap";
 
 type LoginProps = {
     loginUsecase:LoginUsecase
@@ -22,6 +24,7 @@ const Login = (loginProps:LoginProps)=>{
     const loginEntity = useInjection(LoginEntity);
 
     const onLogin = (email : string, password:string)=>{        
+        debugger;
         loginEntity.email = email;
         loginEntity.password = password;
         dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
@@ -33,23 +36,26 @@ const Login = (loginProps:LoginProps)=>{
 
     return (
         <div className="login-wrapper">
-            <form>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>username</td>
-                            <td><input type="text" onBlur = {(e)=>{setEmail(e.currentTarget.value)}}/></td>
-                        </tr>
-                        <tr>
-                            <td>password</td>
-                            <td><input type="password" onBlur = {(e)=>{setPassword(e.currentTarget.value)}}/></td>
-                        </tr>
-                    </tbody>
-                </table> 
-                <input type="button" value="Login" onClick={()=>onLogin(email, password)}/>
-            </form>
-            <Link to="/signup">SignUp</Link>
-        </div>
+            <Form>
+                <Form.Group>
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control type="email" onBlur = {(e)=>{setEmail(e.currentTarget.value)}} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" onBlur = {(e)=>{setPassword(e.currentTarget.value)}} />
+                </Form.Group>
+                <div className="wrapper-forgot-password">
+                    <Form.Label className="col-form-label-sm forgot-password">Forgot password?</Form.Label>
+                </div>                
+                <div className="d-grid gap-2 mt-3">
+                    <Button variant="primary" onClick={()=>onLogin(email, password)}>Login</Button>
+                </div>
+            </Form>
+            <div className="d-grid gap-2 mt-3">
+                <Link to="/signup"> <Button variant="flat" className="w-100">Sign Up</Button></Link>
+            </div>            
+        </div>        
     );
 }
 
