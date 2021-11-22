@@ -7,6 +7,7 @@ import { useInjection } from './di-container';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import SignUpUsecase from './domain/signup/SignUpUsecase';
+import ForgotPassword from './presentation/components/ForgotPassword';
 
 function App() {
   const loginUsecase = useInjection(LoginUsecase);
@@ -14,7 +15,7 @@ function App() {
   return (
     <div className="wrapper">      
       <Container className="h-100">
-        <Row className="h-100">
+        <Row>
           <Col className="first-col p-0">
           <div className="cloudocean">cloud<span className="ocean">Ocean</span></div>
             <Router>
@@ -29,14 +30,17 @@ function App() {
 
                     />} 
                   />
+                  <Route path="forgot-password" element={
+                    <ForgotPassword
+
+                    />} 
+                  />                  
               </Routes>          
             </Router>            
           </Col>
-          {/* <Col className="second-col p-0">            
-            <div className="bg h-100"></div>
-          </Col> */}
-        </Row>
-      </Container>
+        </Row>        
+      </Container>     
+      <a href="" target="_blank" className="terms">Terms and conditions</a>          
     </div>
   );
 }

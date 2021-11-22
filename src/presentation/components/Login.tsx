@@ -35,7 +35,7 @@ const Login = (loginProps:LoginProps)=>{
     }
 
     return (
-        <div className="login-wrapper">
+        <div className="form-wrapper">
             <Form>
                 <Form.Group>
                     <Form.Label>Email address</Form.Label>
@@ -45,17 +45,19 @@ const Login = (loginProps:LoginProps)=>{
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" onBlur = {(e)=>{setPassword(e.currentTarget.value)}} />
                 </Form.Group>
-                <div className="wrapper-forgot-password">
-                    <Form.Label className="col-form-label-sm forgot-password">Forgot password?</Form.Label>
-                </div>                
+                <Form.Label className="col-form-label-sm">
+                    <Link to="/forgot-password">Forgot password?</Link>
+                </Form.Label>
                 <div className="d-grid gap-2 mt-3">
                     <Button variant="primary" onClick={()=>onLogin(email, password)}>Login</Button>
                 </div>
             </Form>
             <div className="d-grid gap-2 mt-3">
-                <Link to="/signup"> <Button variant="flat" className="w-100">Sign Up</Button></Link>
-            </div>            
-        </div>        
+                <Link to="/signup">
+                    <Button variant="flat" className="w-100">Sign Up</Button>
+                </Link>
+            </div>
+        </div>
     );
 }
 

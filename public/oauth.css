@@ -1,19 +1,6 @@
 .app-body{
-    background: linear-gradient(268deg, #E0F7FA, #61a0e9, #87ceeb , #d4c7c4);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+    background-image: url(https://wallpaperaccess.com/full/2546567.jpg);
+    opacity: 0.8;
 }
 
 .first-col{
@@ -32,6 +19,7 @@
 }
 
 .wrapper{
+    position: relative;
     margin: auto;
     width: 500px;
     height: 640px;
@@ -40,9 +28,9 @@
     box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
 }
 
-.login-wrapper{
+.form-wrapper{
     position: relative;
-    top: 160px;
+    top: 140px;
     margin: auto;
     width: 90%;
 }
@@ -52,16 +40,19 @@
     width:600px;
 }
 
-.col-forgot-password{
+.col-text-right{
     text-align: right;
-}
-
-.forgot-password{
-    color: #0d6efd;
 }
 
 .btn-flat{
     background-color: #47bd42!important;
     border-color: #47bd42!important;
     color:#fff!important;
+}
+
+.terms{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0 10px 2px 0;
 }
