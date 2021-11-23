@@ -56,3 +56,8 @@
     right: 0;
     padding: 0 10px 2px 0;
 }
+
+.error-message{
+    margin-top: 20px;
+    text-align: center;    
+}

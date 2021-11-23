@@ -5,7 +5,6 @@ import SignUp from './presentation/components/SignUp';
 import LoginUsecase from './domain/login/LoginUsecase';
 import { useInjection } from './di-container';
 import { Container, Row, Col } from 'react-bootstrap';
-import { useState } from 'react';
 import SignUpUsecase from './domain/signup/SignUpUsecase';
 import ForgotPassword from './presentation/components/ForgotPassword';
 
