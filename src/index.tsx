@@ -11,10 +11,22 @@ import LoginUsecase from './domain/login/LoginUsecase';
 import LoginRepositoryImpl from './infrastructure/LoginRepositoryImpl';
 import LoginEntity from './domain/login/LoginEntity';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ForgotPasswordEntity from './domain/forgotpassword/ForgotPasswordEntity';
+import ForgotPasswordUsecase from './domain/forgotpassword/ForgotPasswordUsecase';
+import ForgotPasswordRepositoryImpl from './infrastructure/ForgotPasswordRepositoryImpl';
+import SignUpUsecase from './domain/signup/SignUpUsecase';
+import SignupRepositoryImpl from './infrastructure/SignupRepositoryImpl';
+import SignUpEntity from './domain/signup/SignUpEntity';
 
 const container = new Container();
 container.bind(LoginEntity).toDynamicValue(context => new LoginEntity("",""));
 container.bind(LoginUsecase).toConstantValue(new LoginUsecase(new LoginRepositoryImpl()));
+
+container.bind(ForgotPasswordEntity).toDynamicValue(context => new ForgotPasswordEntity(""));
+container.bind(ForgotPasswordUsecase).toConstantValue(new ForgotPasswordUsecase(new ForgotPasswordRepositoryImpl()));
+
+container.bind(SignUpEntity).toDynamicValue(context => new SignUpEntity("", ""));
+container.bind(SignUpUsecase).toConstantValue(new SignUpUsecase(new SignupRepositoryImpl()));
 
 const store = createStore(reducers, applyMiddleware(thunk));
 ReactDOM.render(

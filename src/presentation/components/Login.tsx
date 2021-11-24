@@ -29,12 +29,13 @@ const Login = (loginProps:LoginProps)=>{
         window.location.href = "http://localhost:3001/";
     }   
     
-    const onLogin = () : void =>{
+    const ehOnLogin = () : void =>{
         if(hasErrors.length>0){
             setValid(false);
             return;
         }
         
+        setValid(true);
         loginEntity.email = emailEl.current?.value || "";
         loginEntity.password = passwordEl.current?.value || "";
         dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
@@ -61,7 +62,7 @@ const Login = (loginProps:LoginProps)=>{
                     <Link to="/forgot-password">Forgot password?</Link>
                 </Form.Label>
                 <div className="d-grid gap-2 mt-3">                    
-                    <Button variant="primary" onClick={()=>onLogin()}>Login</Button>
+                    <Button variant="primary" onClick={()=>ehOnLogin()}>Login</Button>
                 </div>
             </Form>
             <div className="d-grid gap-2 mt-3">

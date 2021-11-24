@@ -7,9 +7,12 @@ import { useInjection } from './di-container';
 import { Container, Row, Col } from 'react-bootstrap';
 import SignUpUsecase from './domain/signup/SignUpUsecase';
 import ForgotPassword from './presentation/components/ForgotPassword';
+import ForgotPasswordUsecase from './domain/forgotpassword/ForgotPasswordUsecase';
 
 function App() {
   const loginUsecase = useInjection(LoginUsecase);
+  const forgotPasswordUsecase = useInjection(ForgotPasswordUsecase);
+  const signupUsecase = useInjection(SignUpUsecase);
 
   return (
     <div className="wrapper">      
@@ -26,12 +29,12 @@ function App() {
                   />
                   <Route path="signup" element={
                     <SignUp 
-
+                      signupUsecase={signupUsecase}
                     />} 
                   />
                   <Route path="forgot-password" element={
                     <ForgotPassword
-
+                      forgotPasswordUsecase={forgotPasswordUsecase}
                     />} 
                   />                  
               </Routes>          
