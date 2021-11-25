@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import SignUpUsecase from "../../domain/signup/SignUpUsecase";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Alert, Button, Col, Container, Form, FormControl, Row } from "react-bootstrap";
 import { useInjection } from "../../di-container";
 import SignUpEntity from "../../domain/signup/SignUpEntity";
 import { RootState } from "../../reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { signupRequest } from "../../actions";
-import FormErrors, { ErrorProps } from "../../core/FormErrors";
+import UseFormErrors, { ErrorProps } from "../../core/UseFormErrors";
+//import { ErrorProps } from "../../core/useFormErrors";
 
 type SignUpProps = {
     signupUsecase : SignUpUsecase
@@ -29,22 +30,25 @@ const SignUp = (signUpProps:SignUpProps)=>{
         console.log(userSignup.token);
     }   
     
-    const ehOnSignup = () : void =>{
+    const ehOnSignup = (e:any) : void =>{
         debugger;
-        if(hasErrors.length>0){
+        const errorProps : ErrorProps = {e,hasErrors,setHasErrors, type : "sds", message:"" };
+        const {isValid} = UseFormErrors(errorProps);
+        
+        if(isValid()){
+            setValid(true);
+            signUpEntity.email = emailEl.current?.value || "";
+            signUpEntity.password = passwordEl.current?.value || "";        
+            dispatch(signupRequest(signUpProps.signupUsecase, signUpEntity));
+        } else {
             setValid(false);
-            return;
         }
-        setValid(true);
-        signUpEntity.email = emailEl.current?.value || "";
-        signUpEntity.password = passwordEl.current?.value || "";        
-        dispatch(signupRequest(signUpProps.signupUsecase, signUpEntity));
     };
 
     const setErrors = (e:any, type : string): void => {
-        const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type};
+        //const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type};
 
-        FormErrors(errorProps);
+        //FormErrors(errorProps);
     };
 
     return (
@@ -77,7 +81,7 @@ const SignUp = (signUpProps:SignUpProps)=>{
                     </Row>
                 </Container>
                 <div className="d-grid gap-2 mt-3">
-                    <Button variant="flat" onClick={()=>ehOnSignup()}>Sign Up</Button>
+                    <Button variant="flat" onClick={(e)=>ehOnSignup(e)}>Sign Up</Button>
                 </div>
             </Form>
             {

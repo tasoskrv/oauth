@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { Alert, Button, Col, Container, Form, FormControl, Row } from "react-bootstrap";
-import FormErrors, {ErrorProps} from "../../core/FormErrors";
 import { useInjection } from "../../di-container";
 import { useDispatch, useSelector } from "react-redux";
 import ForgotPasswordEntity from "../../domain/forgotpassword/ForgotPasswordEntity";
@@ -27,20 +26,27 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
     }  
 
     const ehOnForgotPasword = () : void =>{
-        if(hasErrors.length>0){
-            setValid(false);
-            return;
+
+        if(isValid()){
+            forgotPasswordEntity.email = emailEl.current?.value || "";
+            dispatch(recoverRequest(forgotPasswordProps.forgotPasswordUsecase, forgotPasswordEntity));
         }
-        setValid(true);
-        forgotPasswordEntity.email = emailEl.current?.value || "";
-        dispatch(recoverRequest(forgotPasswordProps.forgotPasswordUsecase, forgotPasswordEntity));
     };
 
     const setErrors = (e:any, type : string): void => {
-        const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type};
+        //const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type};
 
-        FormErrors(errorProps);
+        //FormErrors(errorProps);
     };
+
+    const isValid = ()=>{
+        if(hasErrors.length>0){
+            setValid(false);
+            return false;;
+        }
+        setValid(true);  
+        return true;      
+    }    
     
     return (
         <div className="form-wrapper">

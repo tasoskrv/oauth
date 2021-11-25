@@ -8,7 +8,7 @@ import LoginUsecase from "../../domain/login/LoginUsecase";
 import { Link } from "react-router-dom";
 import Form from 'react-bootstrap/Form'
 import { Alert, Button, FormControl } from "react-bootstrap";
-import FormErrors, {ErrorProps} from "../../core/FormErrors";
+import UseFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 
 type LoginProps = {
     loginUsecase:LoginUsecase
@@ -29,22 +29,25 @@ const Login = (loginProps:LoginProps)=>{
         window.location.href = "http://localhost:3001/";
     }   
     
-    const ehOnLogin = () : void =>{
-        if(hasErrors.length>0){
+    const ehOnLogin = (e:any) : void =>{
+        const errorProps : ErrorProps = {e,hasErrors,setHasErrors, type : "sds", message:"" };
+        const {isValid} = UseFormErrors(errorProps);
+
+        if(isValid()){
+            setValid(true);
+            loginEntity.email = emailEl.current?.value || "";
+            loginEntity.password = passwordEl.current?.value || "";
+            dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
+        } else {
             setValid(false);
-            return;
         }
-        
-        setValid(true);
-        loginEntity.email = emailEl.current?.value || "";
-        loginEntity.password = passwordEl.current?.value || "";
-        dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
     };
 
     const setErrors = (e:any, type : string): void => {
-        const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type};
+        const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type, message:""};
 
-        FormErrors(errorProps);
+        const {setError} = UseFormErrors(errorProps);
+        setError();
     };
 
     return (
@@ -62,7 +65,7 @@ const Login = (loginProps:LoginProps)=>{
                     <Link to="/forgot-password">Forgot password?</Link>
                 </Form.Label>
                 <div className="d-grid gap-2 mt-3">                    
-                    <Button variant="primary" onClick={()=>ehOnLogin()}>Login</Button>
+                    <Button variant="primary" onClick={(e)=>ehOnLogin(e)}>Login</Button>
                 </div>
             </Form>
             <div className="d-grid gap-2 mt-3">

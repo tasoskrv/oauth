@@ -19,6 +19,7 @@ import SignupRepositoryImpl from './infrastructure/SignupRepositoryImpl';
 import SignUpEntity from './domain/signup/SignUpEntity';
 
 const container = new Container();
+
 container.bind(LoginEntity).toDynamicValue(context => new LoginEntity("",""));
 container.bind(LoginUsecase).toConstantValue(new LoginUsecase(new LoginRepositoryImpl()));
 
