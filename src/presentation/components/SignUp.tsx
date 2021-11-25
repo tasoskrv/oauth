@@ -8,7 +8,6 @@ import { RootState } from "../../reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { signupRequest } from "../../actions";
 import UseFormErrors, { ErrorProps } from "../../core/UseFormErrors";
-//import { ErrorProps } from "../../core/useFormErrors";
 
 type SignUpProps = {
     signupUsecase : SignUpUsecase
@@ -46,9 +45,10 @@ const SignUp = (signUpProps:SignUpProps)=>{
     };
 
     const setErrors = (e:any, type : string): void => {
-        //const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type};
+        const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type, message:""};
 
-        //FormErrors(errorProps);
+        const {applyErrors} = UseFormErrors(errorProps);
+        applyErrors();
     };
 
     return (

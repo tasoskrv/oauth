@@ -6,9 +6,8 @@ export type ErrorProps = {
     message      : string
 }
 
-
 const useFormErrors = (er:ErrorProps)=>{
-    const setError = ()=>{        
+    const applyErrors = ()=>{        
         const value = er.e?.currentTarget?.value,
             index = er.hasErrors.indexOf(er.type);
 
@@ -29,10 +28,8 @@ const useFormErrors = (er:ErrorProps)=>{
 
     return {
         isValid,
-        setError
+        applyErrors
     };
-
-
 };
 
 export default useFormErrors;

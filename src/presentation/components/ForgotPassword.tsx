@@ -7,6 +7,7 @@ import ForgotPasswordEntity from "../../domain/forgotpassword/ForgotPasswordEnti
 import { RootState } from "../../reducers";
 import ForgotPasswordUsecase from "../../domain/forgotpassword/ForgotPasswordUsecase";
 import { recoverRequest } from "../../actions";
+import UseFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 
 type ForgotPasswordProps = {
     forgotPasswordUsecase : ForgotPasswordUsecase
@@ -25,28 +26,25 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
         console.log(userRecover.token);
     }  
 
-    const ehOnForgotPasword = () : void =>{
+    const ehOnForgotPasword = (e:any) : void =>{
+        const errorProps : ErrorProps = {e,hasErrors,setHasErrors, type : "sds", message:"" };
+        const {isValid} = UseFormErrors(errorProps);
 
         if(isValid()){
+            setValid(true);
             forgotPasswordEntity.email = emailEl.current?.value || "";
             dispatch(recoverRequest(forgotPasswordProps.forgotPasswordUsecase, forgotPasswordEntity));
+        } else {
+            setValid(false);
         }
     };
 
     const setErrors = (e:any, type : string): void => {
-        //const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type};
+        const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type, message:""};
 
-        //FormErrors(errorProps);
+        const {applyErrors} = UseFormErrors(errorProps);
+        applyErrors();
     };
-
-    const isValid = ()=>{
-        if(hasErrors.length>0){
-            setValid(false);
-            return false;;
-        }
-        setValid(true);  
-        return true;      
-    }    
     
     return (
         <div className="form-wrapper">
@@ -65,7 +63,7 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
                     </Row>
                 </Container>
                 <div className="d-grid gap-2 mt-3">
-                    <Button variant="flat" onClick={()=>ehOnForgotPasword()}>Send</Button>
+                    <Button variant="flat" onClick={(e)=>ehOnForgotPasword(e)}>Send</Button>
                 </div>
             </Form>
             {

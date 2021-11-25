@@ -46,8 +46,8 @@ const Login = (loginProps:LoginProps)=>{
     const setErrors = (e:any, type : string): void => {
         const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type, message:""};
 
-        const {setError} = UseFormErrors(errorProps);
-        setError();
+        const {applyErrors} = UseFormErrors(errorProps);
+        applyErrors();
     };
 
     return (
