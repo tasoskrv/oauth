@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SignUpUsecase from "../../domain/signup/SignUpUsecase";
 import { Link } from "react-router-dom";
 import { Alert, Button, Col, Container, Form, FormControl, Row } from "react-bootstrap";
@@ -7,33 +7,43 @@ import SignUpEntity from "../../domain/signup/SignUpEntity";
 import { RootState } from "../../reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { signupRequest } from "../../actions";
-import UseFormErrors, { ErrorProps } from "../../core/UseFormErrors";
+import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 
 type SignUpProps = {
     signupUsecase : SignUpUsecase
 }
 
-const SignUp = (signUpProps:SignUpProps)=>{
-
-    const [hasErrors, setHasErrors] = useState<string[]>(["email", "password", "repassword"]);
+const SignUp = (signUpProps:SignUpProps)=>{    
     const [valid, setValid] = useState(true);
     const emailEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const passwordEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const repasswordEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const signUpEntity = useInjection(SignUpEntity);
+    const [message, setMessage] = useState("");
 
     const userSignup = useSelector((state: RootState) => state.login);
     const dispatch = useDispatch();
 
+    const {isValid, applyErrors, applyValidators} = useFormErrors();
+
+    useEffect(()=>{
+        applyValidators(["email", "password", "repassword"]);
+    },[]);
+    
     if(userSignup.token){
         console.log(userSignup.token);
     }   
     
-    const ehOnSignup = (e:any) : void =>{
-        debugger;
-        const errorProps : ErrorProps = {e,hasErrors,setHasErrors, type : "sds", message:"" };
-        const {isValid} = UseFormErrors(errorProps);
-        
+    const ehOnSignup = (e:any) : void =>{            
+        const pass1 = passwordEl.current?.value || "",
+              pass2 = repasswordEl.current?.value || "";
+
+        if(pass1 !== pass2){
+            setValid(false);
+            setMessage("Passwords don't match");
+            return;
+        }
+
         if(isValid()){
             setValid(true);
             signUpEntity.email = emailEl.current?.value || "";
@@ -41,14 +51,14 @@ const SignUp = (signUpProps:SignUpProps)=>{
             dispatch(signupRequest(signUpProps.signupUsecase, signUpEntity));
         } else {
             setValid(false);
+            setMessage("Fill all fields");
         }
     };
 
     const setErrors = (e:any, type : string): void => {
-        const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type, message:""};
+        const errorProps : ErrorProps = {e, type, message:""};
 
-        const {applyErrors} = UseFormErrors(errorProps);
-        applyErrors();
+        applyErrors(errorProps);
     };
 
     return (
@@ -88,7 +98,7 @@ const SignUp = (signUpProps:SignUpProps)=>{
                 valid ?
                 <></> :
                 <Alert variant="danger" className="error-message">
-                    Συμπληρώστε όλα τα πεδία
+                    {message}
                 </Alert>
             }            
         </div>

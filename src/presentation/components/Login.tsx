@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { loginRequest } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../reducers";
@@ -8,15 +8,15 @@ import LoginUsecase from "../../domain/login/LoginUsecase";
 import { Link } from "react-router-dom";
 import Form from 'react-bootstrap/Form'
 import { Alert, Button, FormControl } from "react-bootstrap";
-import UseFormErrors, { ErrorProps } from "../../core/UseFormErrors";
+import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 
 type LoginProps = {
     loginUsecase:LoginUsecase
 }
 
-const Login = (loginProps:LoginProps)=>{
-    const [hasErrors, setHasErrors] = useState<string[]>(["email", "password"]);
+const Login = (loginProps:LoginProps)=>{    
     const [valid, setValid] = useState(true);
+    const [message, setMessage] = useState("");
     const emailEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const passwordEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const loginEntity = useInjection(LoginEntity);
@@ -24,15 +24,18 @@ const Login = (loginProps:LoginProps)=>{
     const userLogin = useSelector((state: RootState) => state.login);
     const dispatch = useDispatch();
 
+    const {isValid, applyErrors, applyValidators} = useFormErrors();
+
+    useEffect(()=>{
+        applyValidators(["email", "password"]);
+    },[]);    
+
     if(userLogin.token){
         console.log(userLogin.token);
         window.location.href = "http://localhost:3001/";
     }   
     
     const ehOnLogin = (e:any) : void =>{
-        const errorProps : ErrorProps = {e,hasErrors,setHasErrors, type : "sds", message:"" };
-        const {isValid} = UseFormErrors(errorProps);
-
         if(isValid()){
             setValid(true);
             loginEntity.email = emailEl.current?.value || "";
@@ -40,14 +43,14 @@ const Login = (loginProps:LoginProps)=>{
             dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
         } else {
             setValid(false);
+            setMessage("Fill all fields");
         }
     };
 
-    const setErrors = (e:any, type : string): void => {
-        const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type, message:""};
+    const setErrors = (e:any, type : string, message : string): void => {
+        const errorProps : ErrorProps = {e, type, message};
 
-        const {applyErrors} = UseFormErrors(errorProps);
-        applyErrors();
+        applyErrors(errorProps);
     };
 
     return (
@@ -55,11 +58,11 @@ const Login = (loginProps:LoginProps)=>{
             <Form>
                 <Form.Group>
                     <Form.Label>Email address</Form.Label>                    
-                    <Form.Control type="email" ref={emailEl} onBlur= {(e)=> setErrors(e, "email")}/>                
+                    <Form.Control type="email" ref={emailEl} onBlur= {(e)=> setErrors(e, "email", "Fill email address")}/>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" ref={passwordEl} onBlur= {(e)=> setErrors(e, "password")}/>
+                    <Form.Control type="password" ref={passwordEl} onBlur= {(e)=> setErrors(e, "password", "Fill password")}/>
                 </Form.Group>
                 <Form.Label className="col-form-label-sm">
                     <Link to="/forgot-password">Forgot password?</Link>
@@ -77,7 +80,7 @@ const Login = (loginProps:LoginProps)=>{
                 valid ?
                 <></> :
                 <Alert variant="danger" className="error-message">
-                    Συμπληρώστε όλα τα πεδία
+                    {message}
                 </Alert>
             }
         </div>

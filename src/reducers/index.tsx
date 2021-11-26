@@ -8,8 +8,7 @@ const loginReducer = (data = {}, action : AnyAction) =>{
     return data;
 }
 
-const recoverReducer = (data = {}, action:AnyAction) =>{
-    debugger;
+const recoverReducer = (data = {}, action:AnyAction) =>{    
     if(action.type === "RECOVER_USER"){
         return action.payload.data;
     }

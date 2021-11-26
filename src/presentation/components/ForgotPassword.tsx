@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Alert, Button, Col, Container, Form, FormControl, Row } from "react-bootstrap";
 import { useInjection } from "../../di-container";
@@ -7,43 +7,46 @@ import ForgotPasswordEntity from "../../domain/forgotpassword/ForgotPasswordEnti
 import { RootState } from "../../reducers";
 import ForgotPasswordUsecase from "../../domain/forgotpassword/ForgotPasswordUsecase";
 import { recoverRequest } from "../../actions";
-import UseFormErrors, { ErrorProps } from "../../core/UseFormErrors";
+import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 
 type ForgotPasswordProps = {
     forgotPasswordUsecase : ForgotPasswordUsecase
 }
 
 const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
-    const [hasErrors, setHasErrors] = useState<string[]>(["email"]);
     const [valid, setValid] = useState(true);
+    const [message, setMessage] = useState("");
     const emailEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const forgotPasswordEntity = useInjection(ForgotPasswordEntity);
 
     const userRecover = useSelector((state: RootState) => state.login);
     const dispatch = useDispatch();
     
+    const {isValid, applyErrors, applyValidators} = useFormErrors();
+
+    useEffect(()=>{
+        applyValidators(["email"]);
+    },[]);    
+    
     if(userRecover.token){
         console.log(userRecover.token);
     }  
 
     const ehOnForgotPasword = (e:any) : void =>{
-        const errorProps : ErrorProps = {e,hasErrors,setHasErrors, type : "sds", message:"" };
-        const {isValid} = UseFormErrors(errorProps);
-
         if(isValid()){
             setValid(true);
             forgotPasswordEntity.email = emailEl.current?.value || "";
             dispatch(recoverRequest(forgotPasswordProps.forgotPasswordUsecase, forgotPasswordEntity));
         } else {
             setValid(false);
+            setMessage("Fill all fields");
         }
     };
 
     const setErrors = (e:any, type : string): void => {
-        const errorProps : ErrorProps = {e,hasErrors,setHasErrors,type, message:""};
+        const errorProps : ErrorProps = {e,type, message:""};
 
-        const {applyErrors} = UseFormErrors(errorProps);
-        applyErrors();
+        applyErrors(errorProps);
     };
     
     return (
@@ -70,7 +73,7 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
                 valid ?
                 <></> :
                 <Alert variant="danger" className="error-message">
-                    Συμπληρώστε όλα τα πεδία
+                    {message}
                 </Alert>
             }
         </div>

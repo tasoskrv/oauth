@@ -1,34 +1,41 @@
+import { useState } from "react";
+
 export type ErrorProps = {    
-    e            : any,    
-    hasErrors    : string[],
-    setHasErrors : any,
-    type         : string,
-    message      : string
+    e       : any,
+    type    : string,
+    message : string
 }
 
-const useFormErrors = (er:ErrorProps)=>{
-    const applyErrors = ()=>{        
-        const value = er.e?.currentTarget?.value,
-            index = er.hasErrors.indexOf(er.type);
+const useFormErrors = ()=>{
+    const [hasErrors, setHasErrors] = useState<string[]>([]);
+    
+    const applyErrors = (er:ErrorProps)=>{        
+        const value = er.e?.currentTarget?.value,              
+              index = hasErrors.indexOf(er.type);
 
         if(!value){
             if(index === -1)
-                er.setHasErrors([...er.hasErrors, er.type]);
+                setHasErrors([...hasErrors, er.type]);
         } else {
-            er.setHasErrors([...er.hasErrors.slice(0, index), ...er.hasErrors.slice(index + 1)]);
-        }        
+            setHasErrors([...hasErrors.slice(0, index), ...hasErrors.slice(index + 1)]);
+        }
     }
 
     const isValid = ()=>{
-        if(er.hasErrors.length>0){
+        if(hasErrors.length>0){
            return false;
         }
         return true;
     };
 
+    const applyValidators = (validators:string[])=>{
+        setHasErrors(validators);
+    }
+
     return {
         isValid,
-        applyErrors
+        applyErrors,
+        applyValidators
     };
 };
 
