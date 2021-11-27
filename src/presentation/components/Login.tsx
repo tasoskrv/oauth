@@ -45,7 +45,7 @@ const Login = (loginProps:LoginProps)=>{
             dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
         } else {
             setValid(false);
-            setMessage("Fill all fields");
+            setMessage(locale.loc("common.0001"));
         }
     };
 
@@ -59,23 +59,23 @@ const Login = (loginProps:LoginProps)=>{
         <div className="form-wrapper">
             <Form>
                 <Form.Group>
-                    <Form.Label>Email address</Form.Label>                    
+                    <Form.Label>{locale.loc("login.0001")}</Form.Label>                    
                     <Form.Control type="email" ref={emailEl} onBlur= {(e)=> setErrors(e, "email", "Fill email address")}/>
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>{locale.loc("login.0002")}</Form.Label>
                     <Form.Control type="password" ref={passwordEl} onBlur= {(e)=> setErrors(e, "password", "Fill password")}/>
                 </Form.Group>
                 <Form.Label className="col-form-label-sm">
-                    <Link to="/forgot-password">Forgot password?</Link>
+                    <Link to="/forgot-password">{locale.loc("common.0004")}</Link>
                 </Form.Label>
                 <div className="d-grid gap-2 mt-3">                    
-                    <Button variant="primary" onClick={(e)=>ehOnLogin(e)}>Login</Button>
+                    <Button variant="primary" onClick={(e)=>ehOnLogin(e)}>{locale.loc("login.0003")}</Button>
                 </div>
             </Form>
             <div className="d-grid gap-2 mt-3">
                 <Link to="/signup">
-                    <Button variant="flat" className="w-100">Sign Up</Button>
+                    <Button variant="flat" className="w-100">{locale.loc("login.0004")}</Button>
                 </Link>
             </div>
             {

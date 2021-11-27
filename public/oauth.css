@@ -28,6 +28,11 @@
     box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
 }
 
+.select-lang{
+    position: absolute!important;
+    right: 0;
+}
+
 .form-wrapper{
     position: relative;
     top: 140px;

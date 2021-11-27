@@ -8,12 +8,14 @@ import { RootState } from "../../reducers";
 import ForgotPasswordUsecase from "../../domain/forgotpassword/ForgotPasswordUsecase";
 import { recoverRequest } from "../../actions";
 import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
+import Lang from "../../locale/Lang";
 
 type ForgotPasswordProps = {
     forgotPasswordUsecase : ForgotPasswordUsecase
 }
 
 const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
+    const locale = useInjection(Lang);
     const [valid, setValid] = useState(true);
     const [message, setMessage] = useState("");
     const emailEl = useRef<HTMLInputElement & typeof FormControl>(null);
@@ -39,7 +41,7 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
             dispatch(recoverRequest(forgotPasswordProps.forgotPasswordUsecase, forgotPasswordEntity));
         } else {
             setValid(false);
-            setMessage("Fill all fields");
+            setMessage(locale.loc("common.0001"));
         }
     };
 
@@ -53,20 +55,20 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
         <div className="form-wrapper">
             <Form>
                 <Form.Group>
-                    <Form.Label>Email address</Form.Label>
+                    <Form.Label>{locale.loc("forgot.0001")}</Form.Label>
                     <Form.Control type="email" ref={emailEl} onBlur= {(e)=> setErrors(e, "email")} />
                 </Form.Group>
                 <Container className="p-0">
                     <Row>
                         <Col>
                             <Form.Label className="col-form-label-sm">
-                                <Link to="/">Login</Link>
+                                <Link to="/">{locale.loc("forgot.0002")}</Link>
                             </Form.Label>
                         </Col>                        
                     </Row>
                 </Container>
                 <div className="d-grid gap-2 mt-3">
-                    <Button variant="flat" onClick={(e)=>ehOnForgotPasword(e)}>Send</Button>
+                    <Button variant="flat" onClick={(e)=>ehOnForgotPasword(e)}>{locale.loc("forgot.0003")}</Button>
                 </div>
             </Form>
             {
