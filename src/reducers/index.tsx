@@ -16,6 +16,7 @@ const recoverReducer = (data = {}, action:AnyAction) =>{
     return data;
 };
 
+
 export const reducers = combineReducers({
     login   : loginReducer,
     recover : recoverReducer

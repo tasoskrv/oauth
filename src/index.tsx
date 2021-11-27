@@ -17,8 +17,11 @@ import ForgotPasswordRepositoryImpl from './infrastructure/ForgotPasswordReposit
 import SignUpUsecase from './domain/signup/SignUpUsecase';
 import SignupRepositoryImpl from './infrastructure/SignupRepositoryImpl';
 import SignUpEntity from './domain/signup/SignUpEntity';
+import Lang from './locale/Lang';
+import locale from './locale/Locale';
 
 const container = new Container();
+container.bind(Lang).toDynamicValue(context => locale);
 
 container.bind(LoginEntity).toDynamicValue(context => new LoginEntity("",""));
 container.bind(LoginUsecase).toConstantValue(new LoginUsecase(new LoginRepositoryImpl()));
@@ -29,11 +32,12 @@ container.bind(ForgotPasswordUsecase).toConstantValue(new ForgotPasswordUsecase(
 container.bind(SignUpEntity).toDynamicValue(context => new SignUpEntity("", ""));
 container.bind(SignUpUsecase).toConstantValue(new SignUpUsecase(new SignupRepositoryImpl()));
 
+
 const store = createStore(reducers, applyMiddleware(thunk));
 ReactDOM.render(
   <Provider store={store}>
       <ContainerProvider container={container}>
-        <App/>
+        <App />
       </ContainerProvider>
   </Provider>,        
   document.querySelector('#root')

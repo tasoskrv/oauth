@@ -9,12 +9,14 @@ import { Link } from "react-router-dom";
 import Form from 'react-bootstrap/Form'
 import { Alert, Button, FormControl } from "react-bootstrap";
 import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
+import Lang from "../../locale/Lang";
 
 type LoginProps = {
     loginUsecase:LoginUsecase
 }
 
 const Login = (loginProps:LoginProps)=>{    
+    const locale = useInjection(Lang);
     const [valid, setValid] = useState(true);
     const [message, setMessage] = useState("");
     const emailEl = useRef<HTMLInputElement & typeof FormControl>(null);
