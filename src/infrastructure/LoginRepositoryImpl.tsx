@@ -13,7 +13,13 @@ export default class LoginRepositoryImpl implements LoginRepository{
                 password : loginEntity.password
             });
 
-            response = responseApi.data;
+            let data = responseApi.data;
+
+            if(!data.success){
+                response = {"success":false, message:data.error};
+            }
+
+
 
         }catch(ex : any){
             response = {"success":false, message:ex.message};

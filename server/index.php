@@ -11,6 +11,7 @@ $password = $data->password;
 
 if($email!="1" && $password!="1"){
     $response["success"] = false;
+    $response["error"] = "invalid credentials";
     echo json_encode($response);
     exit;    
 }

@@ -49,7 +49,6 @@ const Login = (loginProps:LoginProps)=>{
                     //window.location.href = "http://localhost:3001/";
                 }
             }
-
             setLoading(false);
         } else {
             setValid(false);
