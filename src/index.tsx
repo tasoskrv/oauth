@@ -20,6 +20,8 @@ import SignUpEntity from './domain/signup/SignUpEntity';
 import Lang from './locale/Lang';
 import locale from './locale/Locale';
 
+import promiseMiddleware from "redux-promise";
+
 const container = new Container();
 container.bind(Lang).toDynamicValue(context => locale);
 
@@ -32,8 +34,8 @@ container.bind(ForgotPasswordUsecase).toConstantValue(new ForgotPasswordUsecase(
 container.bind(SignUpEntity).toDynamicValue(context => new SignUpEntity("", ""));
 container.bind(SignUpUsecase).toConstantValue(new SignUpUsecase(new SignupRepositoryImpl()));
 
-
 const store = createStore(reducers, applyMiddleware(thunk));
+
 ReactDOM.render(
   <Provider store={store}>
       <ContainerProvider container={container}>

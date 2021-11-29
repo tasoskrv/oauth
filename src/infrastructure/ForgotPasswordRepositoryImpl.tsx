@@ -5,11 +5,15 @@ import RequestApis from "./apis/RequestApis";
 export default class ForgotPasswordRepositoryImpl implements ForgotPasswordRepository{
     async recover(forgotPasswordEntity: ForgotPasswordEntity): Promise<any> {
         
-        const response = await RequestApis.post('',{
+        const response : any = await RequestApis.post('',{
             email : forgotPasswordEntity.email            
+        })
+        .then(r=>{
+            return response;
+        })
+        .catch(e=>{
+            debugger;
+            return response;
         });
-        console.log(response);
-        return response;
-
     }
 }

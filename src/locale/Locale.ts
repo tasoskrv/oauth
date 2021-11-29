@@ -7,7 +7,7 @@ let lang:Lang;
 const urlParams = new URLSearchParams(window.location.search);
 const lg = urlParams.get('lg')
 
-if(lg=="en"){
+if(lg === "en"){
   lang = new En();
 } else {
   lang = new El();  

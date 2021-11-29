@@ -7,7 +7,7 @@ import LoginEntity from "../../domain/login/LoginEntity";
 import LoginUsecase from "../../domain/login/LoginUsecase";
 import { Link } from "react-router-dom";
 import Form from 'react-bootstrap/Form'
-import { Alert, Button, FormControl } from "react-bootstrap";
+import { Alert, Button, FormControl, Spinner } from "react-bootstrap";
 import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 import Lang from "../../locale/Lang";
 
@@ -17,6 +17,7 @@ type LoginProps = {
 
 const Login = (loginProps:LoginProps)=>{    
     const locale = useInjection(Lang);
+    const [loading, setLoading] = useState(false);    
     const [valid, setValid] = useState(true);
     const [message, setMessage] = useState("");
     const emailEl = useRef<HTMLInputElement & typeof FormControl>(null);
@@ -32,19 +33,27 @@ const Login = (loginProps:LoginProps)=>{
         applyValidators(["email", "password"]);
     },[]);    
 
-    if(userLogin.token){
-        console.log(userLogin.token);
-        window.location.href = "http://localhost:3001/";
-    }   
-    
-    const ehOnLogin = (e:any) : void =>{
+    const ehOnLogin = async (e:any) : Promise<void> =>{
         if(isValid()){
             setValid(true);
+            setLoading(true);
             loginEntity.email = emailEl.current?.value || "";
             loginEntity.password = passwordEl.current?.value || "";
-            dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
+            await dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
+            debugger;
+            if(Object.keys(userLogin).length>0){                
+                if(!userLogin.success){         
+                    setValid(false);           
+                    setMessage(userLogin.message);        
+                } else {            
+                    //window.location.href = "http://localhost:3001/";
+                }
+            }
+
+            setLoading(false);
         } else {
             setValid(false);
+            setLoading(false);
             setMessage(locale.loc("common.0001"));
         }
     };
@@ -78,6 +87,9 @@ const Login = (loginProps:LoginProps)=>{
                     <Button variant="flat" className="w-100">{locale.loc("login.0004")}</Button>
                 </Link>
             </div>
+            <div className={`loading ${loading ? "loading":"hidden"}`}>
+                <Spinner animation="border" />
+            </div>            
             {
                 valid ?
                 <></> :

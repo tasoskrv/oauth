@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import Login from './presentation/components/Login';
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from './presentation/components/SignUp';
 import LoginUsecase from './domain/login/LoginUsecase';
 import { useInjection } from './di-container';
@@ -21,8 +21,8 @@ function App() {
   return (
     <div className="wrapper">
         <NavDropdown className="select-lang" title={language}>
-          <NavDropdown.Item href="?lg=el"><img src="../gr.png"/> Ελληνικά</NavDropdown.Item>
-          <NavDropdown.Item href="?lg=en"><img src="../uk.png"/> English</NavDropdown.Item>
+          <NavDropdown.Item href="?lg=el"><img src="../images/gr.png" alt="Ελληνικά" title="Ελληνικά" /> Ελληνικά</NavDropdown.Item>
+          <NavDropdown.Item href="?lg=en"><img src="../images/uk.png" alt="English" title="English" /> English</NavDropdown.Item>
         </NavDropdown>
       <Container className="h-100">
         <Row>
@@ -50,7 +50,7 @@ function App() {
           </Col>
         </Row>        
       </Container>     
-      <a href="" target="_blank" className="terms">{locale.loc("common.0002")}</a>          
+      <a href="http://cloudocean.gr" target="_blank" className="terms">{locale.loc("common.0002")}</a>          
     </div>
   );
 }
