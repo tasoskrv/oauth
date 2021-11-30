@@ -7,8 +7,7 @@ import SignUpEntity from '../domain/signup/SignUpEntity';
 import SignUpUsecase from '../domain/signup/SignUpUsecase';
 
 export const loginRequest = (usecase : LoginUsecase, entity : LoginEntity) => {    
-    return async (dispatch : Dispatch<Action>, getState:any)=>{    
-        debugger;
+    return async (dispatch : Dispatch<Action>, getState:any)=>{            
         const response : any = await usecase.loginUser(entity);
         
         if(!response["success"]){

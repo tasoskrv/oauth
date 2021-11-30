@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import SignUpUsecase from "../../domain/signup/SignUpUsecase";
 import { Link } from "react-router-dom";
-import { Button, Col, Container, Form, FormControl, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Form, FormControl, Row } from "react-bootstrap";
 import AlertBox from "../../core/AlertBox";
 import { useInjection } from "../../di-container";
 import SignUpEntity from "../../domain/signup/SignUpEntity";
-import { RootState } from "../../reducers";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signupRequest } from "../../actions";
 import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 import Lang from "../../locale/Lang";

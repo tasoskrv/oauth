@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { loginRequest } from "../../actions";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../reducers";
+import { useDispatch } from "react-redux";
 import { useInjection } from "../../di-container";
 import LoginEntity from "../../domain/login/LoginEntity";
 import LoginUsecase from "../../domain/login/LoginUsecase";
 import { Link } from "react-router-dom";
 import Form from 'react-bootstrap/Form'
-import { Alert, Button, FormControl, Spinner } from "react-bootstrap";
+import { Button, FormControl } from "react-bootstrap";
 import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 import Lang from "../../locale/Lang";
 import AlertBox from "../../core/AlertBox";
@@ -43,7 +42,7 @@ const Login = (loginProps:LoginProps)=>{
             loginEntity.email = emailEl.current?.value || "";
             loginEntity.password = passwordEl.current?.value || "";
             let response :any = await dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
-            debugger;
+            
             if(!response.success){
                 setValid(false);           
                 setMessage(response.message);                

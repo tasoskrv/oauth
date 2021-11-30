@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Alert, Button, Col, Container, Form, FormControl, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Form, FormControl, Row } from "react-bootstrap";
 import { useInjection } from "../../di-container";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import ForgotPasswordEntity from "../../domain/forgotpassword/ForgotPasswordEntity";
-import { RootState } from "../../reducers";
 import ForgotPasswordUsecase from "../../domain/forgotpassword/ForgotPasswordUsecase";
 import { recoverRequest } from "../../actions";
 import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
@@ -23,8 +22,7 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
     const [message, setMessage] = useState("");
     const emailEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const forgotPasswordEntity = useInjection(ForgotPasswordEntity);
-
-    //const userRecover = useSelector((state: RootState) => state.login);
+    
     const dispatch = useDispatch();
     
     const {isValid, applyErrors, applyValidators} = useFormErrors();
@@ -38,7 +36,7 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
             setValid(true);
             setLoading(true);
             forgotPasswordEntity.email = emailEl.current?.value || "";
-            debugger;
+            
             let response :any = await dispatch(recoverRequest(forgotPasswordProps.forgotPasswordUsecase, forgotPasswordEntity));
 
             if(!response.success){
