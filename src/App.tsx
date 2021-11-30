@@ -50,7 +50,7 @@ function App() {
           </Col>
         </Row>        
       </Container>     
-      <a href="http://cloudocean.gr" target="_blank" className="terms">{locale.loc("common.0002")}</a>          
+      <a href="http://cloudocean.gr" target="_blank" rel="noreferrer" className="terms">{locale.loc("common.0002")}</a>          
     </div>
   );
 }

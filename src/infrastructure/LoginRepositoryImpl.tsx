@@ -18,9 +18,6 @@ export default class LoginRepositoryImpl implements LoginRepository{
             if(!data.success){
                 response = {"success":false, message:data.error};
             }
-
-
-
         }catch(ex : any){
             response = {"success":false, message:ex.message};
         }

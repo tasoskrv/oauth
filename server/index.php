@@ -7,7 +7,7 @@ $request_body = file_get_contents('php://input');
 $data = json_decode($request_body);        
 
 $email = $data->email;
-$password = $data->password;
+$password = (isset($data->password)) ? $data->password : "";
 
 if($email!="1" && $password!="1"){
     $response["success"] = false;

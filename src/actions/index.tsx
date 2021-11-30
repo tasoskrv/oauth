@@ -15,13 +15,15 @@ export const loginRequest = (usecase : LoginUsecase, entity : LoginEntity) => {
             dispatch({
                 type    : 'LOGIN_USER_FAILED',
                 payload : response
-            });
+            });            
         } else {
             dispatch({
                 type    : 'LOGIN_USER',
                 payload : response
             });
         }
+
+        return response;
     }
 }
 
@@ -29,10 +31,20 @@ export const recoverRequest = (usecase : ForgotPasswordUsecase, entity : ForgotP
     return async (dispatch : Dispatch<Action>, getState:any)=>{    
         const response = await usecase.recoverUser(entity);
 
-        dispatch({
-            type    : 'RECOVER_USER',
-            payload : response
-        });
+
+        if(!response["success"]){
+            dispatch({
+                type    : 'RECOVER_USER_FAILED',
+                payload : response
+            });            
+        } else {
+            return dispatch({
+                type    : 'RECOVER_USER',
+                payload : response
+            });
+        }
+
+        return response;
     }
 }
 
@@ -44,6 +56,8 @@ export const signupRequest = (usecase:SignUpUsecase, entity:SignUpEntity)=>{
             type    : 'SIGNUP_USER',
             payload : response
         });
+
+        return response;
     }
 };
 
