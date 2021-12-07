@@ -9,8 +9,8 @@ export default class SignUpUsecase{
         this.signupRepository = signupRepository;
     }
 
-    public signupUser(signupEntity:SignUpEntity):Promise<any>{
-        const signupResult = this.signupRepository.signup(signupEntity);
+    public async signupUser(signupEntity:SignUpEntity):Promise<any>{
+        const signupResult = await this.signupRepository.signup(signupEntity);
 
         return signupResult;        
     }

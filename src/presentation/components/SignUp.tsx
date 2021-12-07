@@ -21,6 +21,8 @@ const SignUp = (signUpProps:SignUpProps)=>{
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
+
+    const formEl = useRef<HTMLFormElement>(null);
     const emailEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const passwordEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const repasswordEl = useRef<HTMLInputElement & typeof FormControl>(null);
@@ -50,12 +52,13 @@ const SignUp = (signUpProps:SignUpProps)=>{
             signUpEntity.email = emailEl.current?.value || "";
             signUpEntity.password = passwordEl.current?.value || "";        
             let response :any = await dispatch(signupRequest(signUpProps.signupUsecase, signUpEntity));
-
+debugger;
             if(!response.success){
                 setValid(false);
                 setMessage(response.message);
             } else {
                 setValid(true);
+                formEl.current?.reset();
             }
             setLoading(false);
         } else {
@@ -72,7 +75,7 @@ const SignUp = (signUpProps:SignUpProps)=>{
 
     return (
         <div className="form-wrapper">
-            <Form>
+            <Form ref={formEl} >
                 <Form.Group>
                     <Form.Label>{locale.loc("signup.0001")}</Form.Label>
                     <Form.Control type="email" ref={emailEl} onBlur= {(e)=> setErrors(e, "email")} />

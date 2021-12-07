@@ -2,7 +2,7 @@ import { AnyAction, combineReducers } from "redux";
 
 const loginReducer = (data = {}, action : AnyAction) =>{        
     if(action.type === "LOGIN_USER"){
-        return action.payload.data;
+        return action.payload;
     } else if(action.type === "LOGIN_USER_FAILED"){
         return action.payload;
     }

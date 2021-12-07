@@ -42,11 +42,13 @@ const Login = (loginProps:LoginProps)=>{
             loginEntity.email = emailEl.current?.value || "";
             loginEntity.password = passwordEl.current?.value || "";
             let response :any = await dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
-            
+            debugger;
             if(!response.success){
                 setValid(false);           
                 setMessage(response.message);                
             } else {
+                console.log(response.token);
+                console.log(response.sn);
                 //window.location.href = "http://localhost:3001/";
             }
             setLoading(false);

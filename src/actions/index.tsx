@@ -50,7 +50,7 @@ export const recoverRequest = (usecase : ForgotPasswordUsecase, entity : ForgotP
 export const signupRequest = (usecase:SignUpUsecase, entity:SignUpEntity)=>{
     return async (dispatch:Dispatch<Action>, getState:any) => {
         const response = await usecase.signupUser(entity);
-
+debugger;
         dispatch({
             type    : 'SIGNUP_USER',
             payload : response

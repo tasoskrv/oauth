@@ -8,8 +8,8 @@ export default class LoginUsecase {
         this.loginRepo = loginRepo;
     }
 
-    public loginUser(loginEntity: LoginEntity): Promise<any> {
-        const loginResult = this.loginRepo.login(loginEntity);
+    public async loginUser(loginEntity: LoginEntity): Promise<any> {
+        const loginResult = await this.loginRepo.login(loginEntity);
 
         return loginResult;
     }   
