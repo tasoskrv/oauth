@@ -25,7 +25,7 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
     
     const dispatch = useDispatch();
     
-    const {isValid, applyErrors, applyValidators} = useFormErrors();
+    const {isValid, applyErrors, applyValidators} = useFormErrors(["email"]);
 
     useEffect(()=>{
         applyValidators(["email"]);
