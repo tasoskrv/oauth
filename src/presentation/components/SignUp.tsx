@@ -31,28 +31,42 @@ const SignUp = (signUpProps:SignUpProps)=>{
     //const userSignup = useSelector((state: RootState) => state.login);
     const dispatch = useDispatch();
 
-    const {isValid, applyErrors, applyValidators} = useFormErrors(["email", "password", "repassword"]);
+    const {isValid, applyErrors, applyValidators, emailValidation} = useFormErrors(["email", "password", "repassword"]);
 
     useEffect(()=>{
         applyValidators(["email", "password", "repassword"]);
     },[]);
-        
-    const ehOnSignup = async (e:any) : Promise<void> =>{            
+    
+    const isFormValid = ()=>{
         const pass1 = passwordEl.current?.value || "",
-              pass2 = repasswordEl.current?.value || "";
+              pass2 = repasswordEl.current?.value || "",
+              email = emailEl.current?.value || "";
 
         if(pass1 !== pass2){
             setValid(false);
             setMessage(locale.loc("common.0003"));
-            return;
+            return false;
         }
+
+        const validEmail = emailValidation(email);
 debugger;
-        if(isValid()){
+        if(!validEmail){
+            setValid(false);
+            setMessage(locale.loc("common.0006"));            
+            return false;
+        }
+        
+        return isValid();
+    }
+
+    const ehOnSignup = async (e:any) : Promise<void> =>{
+        debugger;
+        if(isFormValid()){
             setValid(true);
             signUpEntity.email = emailEl.current?.value || "";
             signUpEntity.password = passwordEl.current?.value || "";        
             let response :any = await dispatch(signupRequest(signUpProps.signupUsecase, signUpEntity));
-debugger;
+            debugger;
             if(!response.success){
                 setValid(false);
                 setMessage(response.message);
@@ -68,7 +82,7 @@ debugger;
     };
 
     const setErrors = (e:any, type : string): void => {
-        const errorProps : ErrorProps = {e, type, message:""};
+        const errorProps : ErrorProps = {e, type};
 
         applyErrors(errorProps);
     };

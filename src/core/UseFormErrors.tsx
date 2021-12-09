@@ -1,9 +1,8 @@
 import { useState } from "react";
 
 export type ErrorProps = {    
-    e       : any,
-    type    : string,
-    message : string
+    e    : any,
+    type : string
 }
 
 const useFormErrors = (fields:any)=>{
@@ -16,16 +15,6 @@ const useFormErrors = (fields:any)=>{
         if(!value){
             if(index === -1)
                 setHasErrors([...hasErrors, er.type]);
-        } else if(er.type === "email"){
-            const validEmail = emailValidation(value);
-debugger;
-            if(validEmail){
-                setHasErrors([...hasErrors.slice(0, index), ...hasErrors.slice(index + 1)]);    
-            } else {
-                if(index === -1)
-                    setHasErrors([...hasErrors, er.type]);
-            }
-
         } else {
             setHasErrors([...hasErrors.slice(0, index), ...hasErrors.slice(index + 1)]);
         }
@@ -53,7 +42,8 @@ debugger;
     return {
         isValid,
         applyErrors,
-        applyValidators
+        applyValidators,
+        emailValidation
     };
 };
 

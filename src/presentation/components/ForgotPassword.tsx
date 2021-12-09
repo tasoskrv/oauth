@@ -55,7 +55,7 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
     };
 
     const setErrors = (e:any, type : string): void => {
-        const errorProps : ErrorProps = {e,type, message:""};
+        const errorProps : ErrorProps = {e,type};
 
         applyErrors(errorProps);
     };
