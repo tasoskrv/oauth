@@ -29,7 +29,7 @@ const Login = (loginProps:LoginProps)=>{
     //const userLogin = useSelector((state: RootState) => state.login);
     const dispatch = useDispatch();
 
-    const {isValid, applyErrors, applyValidators} = useFormErrors();
+    const {isValid, applyErrors, applyValidators} = useFormErrors(["email", "password"]);
 
     useEffect(()=>{
         applyValidators(["email", "password"]);

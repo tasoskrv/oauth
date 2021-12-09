@@ -6,8 +6,8 @@ export type ErrorProps = {
     message : string
 }
 
-const useFormErrors = ()=>{
-    const [hasErrors, setHasErrors] = useState<string[]>([]);
+const useFormErrors = (fields:any)=>{
+    const [hasErrors, setHasErrors] = useState<string[]>(fields);
     
     const applyErrors = (er:ErrorProps)=>{        
         const value = er.e?.currentTarget?.value,              
@@ -16,6 +16,16 @@ const useFormErrors = ()=>{
         if(!value){
             if(index === -1)
                 setHasErrors([...hasErrors, er.type]);
+        } else if(er.type === "email"){
+            const validEmail = emailValidation(value);
+debugger;
+            if(validEmail){
+                setHasErrors([...hasErrors.slice(0, index), ...hasErrors.slice(index + 1)]);    
+            } else {
+                if(index === -1)
+                    setHasErrors([...hasErrors, er.type]);
+            }
+
         } else {
             setHasErrors([...hasErrors.slice(0, index), ...hasErrors.slice(index + 1)]);
         }
@@ -30,6 +40,14 @@ const useFormErrors = ()=>{
 
     const applyValidators = (validators:string[])=>{
         setHasErrors(validators);
+    }
+
+    const emailValidation = (value:string)=>{
+        const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        if(regex.test(value) === false){
+            return false;
+        }
+        return true;
     }
 
     return {

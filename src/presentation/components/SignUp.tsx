@@ -31,7 +31,7 @@ const SignUp = (signUpProps:SignUpProps)=>{
     //const userSignup = useSelector((state: RootState) => state.login);
     const dispatch = useDispatch();
 
-    const {isValid, applyErrors, applyValidators} = useFormErrors();
+    const {isValid, applyErrors, applyValidators} = useFormErrors(["email", "password", "repassword"]);
 
     useEffect(()=>{
         applyValidators(["email", "password", "repassword"]);
@@ -46,7 +46,7 @@ const SignUp = (signUpProps:SignUpProps)=>{
             setMessage(locale.loc("common.0003"));
             return;
         }
-
+debugger;
         if(isValid()){
             setValid(true);
             signUpEntity.email = emailEl.current?.value || "";
