@@ -45,6 +45,7 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
             } else{
                 //DO pop up
                 setValid(false);
+                setMessage(response.message);
             }
             setLoading(false);
         } else {

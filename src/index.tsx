@@ -20,8 +20,6 @@ import SignUpEntity from './domain/signup/SignUpEntity';
 import Lang from './locale/Lang';
 import locale from './locale/Locale';
 
-import promiseMiddleware from "redux-promise";
-
 const container = new Container();
 container.bind(Lang).toDynamicValue(context => locale);
 

@@ -47,8 +47,6 @@ const Login = (loginProps:LoginProps)=>{
                 setValid(false);           
                 setMessage(response.message);                
             } else {
-                console.log(response.token);
-                console.log(response.sn);
                 //window.location.href = "http://localhost:3001/";
             }
             setLoading(false);
@@ -59,8 +57,8 @@ const Login = (loginProps:LoginProps)=>{
         }
     };
 
-    const setErrors = (e:any, type : string, message : string): void => {
-        const errorProps : ErrorProps = {e, type, message};
+    const setErrors = (e:any, type : string): void => {
+        const errorProps : ErrorProps = {e, type};
 
         applyErrors(errorProps);
     };
@@ -70,11 +68,11 @@ const Login = (loginProps:LoginProps)=>{
             <Form>
                 <Form.Group>
                     <Form.Label>{locale.loc("login.0001")}</Form.Label>                    
-                    <Form.Control type="email" ref={emailEl} onBlur= {(e)=> setErrors(e, "email", "Fill email address")}/>
+                    <Form.Control type="email" ref={emailEl} onBlur= {(e)=> setErrors(e, "email")}/>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>{locale.loc("login.0002")}</Form.Label>
-                    <Form.Control type="password" ref={passwordEl} onBlur= {(e)=> setErrors(e, "password", "Fill password")}/>
+                    <Form.Control type="password" ref={passwordEl} onBlur= {(e)=> setErrors(e, "password")}/>
                 </Form.Group>
                 <Form.Label className="col-form-label-sm">
                     <Link to="/forgot-password">{locale.loc("common.0004")}</Link>

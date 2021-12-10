@@ -21,7 +21,6 @@ const SignUp = (signUpProps:SignUpProps)=>{
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
-
     const formEl = useRef<HTMLFormElement>(null);
     const emailEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const passwordEl = useRef<HTMLInputElement & typeof FormControl>(null);
