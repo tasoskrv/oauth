@@ -9,8 +9,8 @@ import Form from 'react-bootstrap/Form'
 import { Button, FormControl } from "react-bootstrap";
 import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 import Lang from "../../locale/Lang";
-import AlertBox from "../../core/AlertBox";
 import Loading from "../../core/Loading";
+import MessageBox from "../../core/MessageBox";
 
 type LoginProps = {
     loginUsecase:LoginUsecase
@@ -42,7 +42,7 @@ const Login = (loginProps:LoginProps)=>{
             loginEntity.email = emailEl.current?.value || "";
             loginEntity.password = passwordEl.current?.value || "";
             let response :any = await dispatch(loginRequest(loginProps.loginUsecase, loginEntity));
-            debugger;
+            
             if(!response.success){
                 setValid(false);           
                 setMessage(response.message);                
@@ -90,7 +90,7 @@ const Login = (loginProps:LoginProps)=>{
             {
                 valid ?
                 <></> :
-                <AlertBox message={message} />
+                <MessageBox message={message} type="error"/>
             }
         </div>
     );

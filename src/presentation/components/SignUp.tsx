@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import SignUpUsecase from "../../domain/signup/SignUpUsecase";
 import { Link } from "react-router-dom";
 import { Button, Col, Container, Form, FormControl, Row } from "react-bootstrap";
-import AlertBox from "../../core/AlertBox";
 import { useInjection } from "../../di-container";
 import SignUpEntity from "../../domain/signup/SignUpEntity";
 import { useDispatch } from "react-redux";
@@ -10,6 +9,7 @@ import { signupRequest } from "../../actions";
 import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 import Lang from "../../locale/Lang";
 import Loading from "../../core/Loading";
+import MessageBox from "../../core/MessageBox";
 
 type SignUpProps = {
     signupUsecase : SignUpUsecase
@@ -18,6 +18,7 @@ type SignUpProps = {
 const SignUp = (signUpProps:SignUpProps)=>{    
     const locale = useInjection(Lang);    
     const [valid, setValid] = useState(true);
+    const [signed, setSigned] = useState(false);
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -27,7 +28,6 @@ const SignUp = (signUpProps:SignUpProps)=>{
     const repasswordEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const signUpEntity = useInjection(SignUpEntity);
 
-    //const userSignup = useSelector((state: RootState) => state.login);
     const dispatch = useDispatch();
 
     const {isValid, applyErrors, applyValidators, emailValidation} = useFormErrors(["email", "password", "repassword"]);
@@ -42,41 +42,44 @@ const SignUp = (signUpProps:SignUpProps)=>{
               email = emailEl.current?.value || "";
 
         if(pass1 !== pass2){
-            setValid(false);
             setMessage(locale.loc("common.0003"));
             return false;
         }
 
-        const validEmail = emailValidation(email);
-debugger;
-        if(!validEmail){
-            setValid(false);
+        if(!emailValidation(email)){
             setMessage(locale.loc("common.0006"));            
             return false;
         }
         
-        return isValid();
+        if(!isValid()){            
+            setMessage(locale.loc("common.0001"));
+            return false;
+        }
+        
+        return true;
     }
 
     const ehOnSignup = async (e:any) : Promise<void> =>{
-        debugger;
         if(isFormValid()){
+            setLoading(true);
             setValid(true);
             signUpEntity.email = emailEl.current?.value || "";
             signUpEntity.password = passwordEl.current?.value || "";        
             let response :any = await dispatch(signupRequest(signUpProps.signupUsecase, signUpEntity));
-            debugger;
+            
             if(!response.success){
                 setValid(false);
                 setMessage(response.message);
             } else {
                 setValid(true);
+                setSigned(true);
+                setMessage(locale.loc("common.0007"));
                 formEl.current?.reset();
             }
             setLoading(false);
         } else {
-            setValid(false);
-            setMessage(locale.loc("common.0001"));
+            setValid(false);      
+            setLoading(false);      
         }
     };
 
@@ -123,8 +126,13 @@ debugger;
             {
                 valid ?
                 <></> :
-                <AlertBox message={message} />
-            }            
+                <MessageBox message={message} type={"error"} />
+            }
+            {
+                signed ?
+                <MessageBox message={message} type={"success"} /> :
+                <></>  
+            }
         </div>
     );
 }

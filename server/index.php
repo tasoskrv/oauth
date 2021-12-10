@@ -29,7 +29,7 @@ if($oauth == "registration"){
 
     } catch(PDOException $e){
         $response["success"] = false;
-        $response["error"] = "Something went wrong. Please try again later (".$e->getCode().")";
+        $response["error"] = "Something went wrong. Please try again later.";
     }
 
 } else if($oauth == "authenticate"){
@@ -38,7 +38,7 @@ if($oauth == "registration"){
         
     try {
         $binds = array(":email" => $email, ":password" => $password);    
-        $query = "SELECTd * FROM `user` where email=:email and password = md5(:password)";
+        $query = "SELECT * FROM `user` where email=:email and password = md5(:password)";
         $count = $db->countRows($query, true, $binds);
     
         if($count == 0){
@@ -51,8 +51,26 @@ if($oauth == "registration"){
         }
     } catch(PDOException $e){
         $response["success"] = false;
-        $response["error"] = "Something went wrong. Please try again later (".$e->getCode().")";
+        $response["error"] = "Something went wrong. Please try again later.";
     }
+} else if($oauth == "reset"){
+    $email = $data->email;
+
+    try {
+        $binds = array(":email" => $email);    
+        $query = "SELECT * FROM `user` where email=:email";
+        $count = $db->countRows($query, true, $binds);
+    
+        if($count == 0){
+            $response["success"] = false;
+            $response["error"] = "User not found";
+        } else {
+            $response["success"] = true;
+        }
+    } catch(PDOException $e){
+        $response["success"] = false;
+        $response["error"] = "Something went wrong. Please try again later.";
+    }    
 }
 
 echo json_encode($response);

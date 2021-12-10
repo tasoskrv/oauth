@@ -8,7 +8,8 @@ class En extends Lang{
             "0003" : "Passwords don't match",
             "0004" : "Forgot password?",
             "0005" : "Language",
-            "0006" : "Please provide a valid email address"
+            "0006" : "Please provide a valid email address",
+            "0007" : "Please confirm your email"
         },
         login : {
             "0001" : "Email",
@@ -26,7 +27,8 @@ class En extends Lang{
         forgot:{
             "0001" : "Email",
             "0002" : "Login",
-            "0003" : "Send"
+            "0003" : "Send",
+            "0004" : "Check your email"
         }
     }
 }

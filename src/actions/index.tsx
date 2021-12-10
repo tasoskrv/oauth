@@ -29,15 +29,14 @@ export const loginRequest = (usecase : LoginUsecase, entity : LoginEntity) => {
 export const recoverRequest = (usecase : ForgotPasswordUsecase, entity : ForgotPasswordEntity) => {    
     return async (dispatch : Dispatch<Action>, getState:any)=>{    
         const response = await usecase.recoverUser(entity);
-
-
+debugger;
         if(!response["success"]){
             dispatch({
                 type    : 'RECOVER_USER_FAILED',
                 payload : response
             });            
         } else {
-            return dispatch({
+            dispatch({
                 type    : 'RECOVER_USER',
                 payload : response
             });

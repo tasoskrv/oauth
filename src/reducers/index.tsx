@@ -12,7 +12,7 @@ const loginReducer = (data = {}, action : AnyAction) =>{
 
 const recoverReducer = (data = {}, action:AnyAction) =>{    
     if(action.type === "RECOVER_USER"){
-        return action.payload.data;
+        return action.payload;
     } else if(action.type === "RECOVER_USER_FAILED"){
         return action.payload;
     }
