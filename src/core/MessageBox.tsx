@@ -1,7 +1,6 @@
 import { Alert } from "react-bootstrap";
 
 const MessageBox = ({message, type} : any)=>{    
-debugger;
     let toast : any = null;
 
     if(type === "success"){

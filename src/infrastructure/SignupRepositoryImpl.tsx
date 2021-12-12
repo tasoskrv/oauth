@@ -5,7 +5,7 @@ import RequestApis from "./apis/RequestApis";
 export default class SignupRepositoryImpl implements SignupRepository{
     async signup(loginEntity: SignUpEntity): Promise<any> {        
         let response : any;
-debugger;
+
         try {
             const responseApi = await RequestApis.post('',{
                 email    : loginEntity.email,

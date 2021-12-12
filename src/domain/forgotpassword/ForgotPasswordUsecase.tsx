@@ -10,7 +10,7 @@ export default class ForgotPasswordUsecase {
 
     public recoverUser(forgotPasswordEntity: ForgotPasswordEntity): Promise<any> {
         const recoverResult = this.forgotPassRepo.recover(forgotPasswordEntity);
-
+                
         return recoverResult;
     }   
 }

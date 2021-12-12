@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { loginRequest } from "../../actions";
+import { loginRequest } from "../../store/actions";
 import { useDispatch } from "react-redux";
 import { useInjection } from "../../di-container";
 import LoginEntity from "../../domain/login/LoginEntity";
@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form'
 import { Button, FormControl } from "react-bootstrap";
 import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 import Lang from "../../locale/Lang";
-import Loading from "../../core/Loading";
+import {LoadingMemo} from "../../core/Loading";
 import MessageBox from "../../core/MessageBox";
 
 type LoginProps = {
@@ -17,6 +17,7 @@ type LoginProps = {
 }
 
 const Login = (loginProps:LoginProps)=>{    
+    console.log('login start');
     const locale = useInjection(Lang);
     const [loading, setLoading] = useState(false);
     const [valid, setValid] = useState(true);
@@ -24,14 +25,13 @@ const Login = (loginProps:LoginProps)=>{
 
     const emailEl = useRef<HTMLInputElement & typeof FormControl>(null);
     const passwordEl = useRef<HTMLInputElement & typeof FormControl>(null);
-    const loginEntity = useInjection(LoginEntity);
+    const loginEntity = useInjection(LoginEntity);    
 
-    //const userLogin = useSelector((state: RootState) => state.login);
     const dispatch = useDispatch();
 
     const {isValid, applyErrors, applyValidators} = useFormErrors(["email", "password"]);
 
-    useEffect(()=>{
+    useEffect(()=>{        
         applyValidators(["email", "password"]);
     },[]);    
 
@@ -47,7 +47,7 @@ const Login = (loginProps:LoginProps)=>{
                 setValid(false);           
                 setMessage(response.message);                
             } else {
-                //window.location.href = "http://localhost:3001/";
+                window.location.href = "http://localhost:3001/";
             }
             setLoading(false);
         } else {
@@ -55,11 +55,11 @@ const Login = (loginProps:LoginProps)=>{
             setLoading(false);
             setMessage(locale.loc("common.0001"));
         }
-    };
-
+    };  
+    
     const setErrors = (e:any, type : string): void => {
         const errorProps : ErrorProps = {e, type};
-
+        
         applyErrors(errorProps);
     };
 
@@ -86,7 +86,7 @@ const Login = (loginProps:LoginProps)=>{
                     <Button variant="flat" className="w-100">{locale.loc("login.0004")}</Button>
                 </Link>
             </div>
-            <Loading loading={loading} />
+            <LoadingMemo loading={loading} />
             {
                 valid ?
                 <></> :

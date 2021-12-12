@@ -43,7 +43,7 @@ if($oauth == "registration"){
     
         if($count == 0){
             $response["success"] = false;
-            $response["error"] = "invalid credentials";
+            $response["error"] = "Invalid credentials";
         } else {
             $response["success"] = true;
             $response["token"] = "JHDF4578FDFYJHDFG78DFFSDF78SDF";

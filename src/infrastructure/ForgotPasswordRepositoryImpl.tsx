@@ -14,7 +14,7 @@ export default class ForgotPasswordRepositoryImpl implements ForgotPasswordRepos
                     'oauth' : 'reset'
                 }
             });
-    debugger;
+    
             let data = responseApi.data;
     
             if(!data.success){

@@ -15,7 +15,7 @@ export default class LoginRepositoryImpl implements LoginRepository{
                     'oauth' : 'authenticate'
                 }
             });
-debugger;
+
             let data = responseApi.data;
 
             if(!data.success){

@@ -5,10 +5,10 @@ import { useInjection } from "../../di-container";
 import { useDispatch } from "react-redux";
 import ForgotPasswordEntity from "../../domain/forgotpassword/ForgotPasswordEntity";
 import ForgotPasswordUsecase from "../../domain/forgotpassword/ForgotPasswordUsecase";
-import { recoverRequest } from "../../actions";
+import { recoverRequest } from "../../store/actions";
 import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 import Lang from "../../locale/Lang";
-import Loading from "../../core/Loading";
+import {LoadingMemo} from "../../core/Loading";
 import MessageBox from "../../core/MessageBox";
 
 type ForgotPasswordProps = {
@@ -16,6 +16,7 @@ type ForgotPasswordProps = {
 }
 
 const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
+    console.log('forgot start');
     const locale = useInjection(Lang);
     const [loading, setLoading] = useState(false);
     const [valid, setValid] = useState(true);
@@ -31,13 +32,13 @@ const ForgotPassword = (forgotPasswordProps:ForgotPasswordProps)=>{
     const {isValid, applyErrors, applyValidators, emailValidation} = useFormErrors(["email"]);
 
     useEffect(()=>{
+        console.log('forgot useEffect');
         applyValidators(["email"]);
     },[]);    
     
-
     const isFormValid = ()=>{
         const email = emailEl.current?.value || "";
-debugger;
+        
         if(!emailValidation(email)){
             setMessage(locale.loc("common.0006"));            
             return false;
@@ -58,11 +59,11 @@ debugger;
             forgotPasswordEntity.email = emailEl.current?.value || "";
             
             let response :any = await dispatch(recoverRequest(forgotPasswordProps.forgotPasswordUsecase, forgotPasswordEntity));
-debugger;
+
             if(!response.success){
                 setValid(false);
                 setMessage(response.message);
-            } else{
+            } else {
                 setValid(true);
                 setReset(true);
                 setMessage(locale.loc("forgot.0004"));
@@ -101,7 +102,7 @@ debugger;
                     <Button variant="flat" onClick={(e)=>ehOnForgotPasword(e)}>{locale.loc("forgot.0003")}</Button>
                 </div>
             </Form>
-            <Loading loading={loading} />
+            <LoadingMemo loading={loading} />
             {
                 valid ?
                 <></> :

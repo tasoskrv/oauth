@@ -5,10 +5,10 @@ import { Button, Col, Container, Form, FormControl, Row } from "react-bootstrap"
 import { useInjection } from "../../di-container";
 import SignUpEntity from "../../domain/signup/SignUpEntity";
 import { useDispatch } from "react-redux";
-import { signupRequest } from "../../actions";
+import { signupRequest } from "../../store/actions";
 import useFormErrors, { ErrorProps } from "../../core/UseFormErrors";
 import Lang from "../../locale/Lang";
-import Loading from "../../core/Loading";
+import {LoadingMemo} from "../../core/Loading";
 import MessageBox from "../../core/MessageBox";
 
 type SignUpProps = {
@@ -16,6 +16,7 @@ type SignUpProps = {
 }
 
 const SignUp = (signUpProps:SignUpProps)=>{    
+    console.log('signup start');
     const locale = useInjection(Lang);    
     const [valid, setValid] = useState(true);
     const [signed, setSigned] = useState(false);
@@ -33,6 +34,7 @@ const SignUp = (signUpProps:SignUpProps)=>{
     const {isValid, applyErrors, applyValidators, emailValidation} = useFormErrors(["email", "password", "repassword"]);
 
     useEffect(()=>{
+        console.log('signup useEffect');
         applyValidators(["email", "password", "repassword"]);
     },[]);
     
@@ -122,7 +124,7 @@ const SignUp = (signUpProps:SignUpProps)=>{
                     <Button variant="flat" onClick={(e)=>ehOnSignup(e)}>{locale.loc("signup.0005")}</Button>
                 </div>
             </Form>
-            <Loading loading={loading} />        
+            <LoadingMemo loading={loading} />        
             {
                 valid ?
                 <></> :
