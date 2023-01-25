@@ -9,7 +9,6 @@ $headers = apache_request_headers();
 $oauth = (isset($headers['oauth']))? $headers['oauth'] : null;
 
 $db = new Database();
-
 $response = array();
 $request_body = file_get_contents('php://input');
 $data = json_decode($request_body);
@@ -35,7 +34,9 @@ if($oauth == "registration"){
 } else if($oauth == "authenticate"){
     $email = $data->email;
     $password = $data->password;
-        
+
+
+
     try {
         $binds = array(":email" => $email, ":password" => $password);    
         $query = "SELECT * FROM `user` where email=:email and password = md5(:password)";

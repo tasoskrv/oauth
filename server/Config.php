@@ -1,11 +1,10 @@
 <?php
-/*
-define("DB_TYPE","mysql");
-define("DB_HOST","localhost:3306");
-define("DB_NAME","adminbody_diet");
-define("DB_USER","dietnet");
-define("DB_PASS","Mie0^p78");
-*/
+
+// define("DB_TYPE","mysql");
+// define("DB_HOST","localhost");
+// define("DB_NAME","u497761731_cloudnet");
+// define("DB_USER","u497761731_cloudnet");
+// define("DB_PASS","Cloudnet1");
 
 
 define("DB_HOST","127.0.0.1");

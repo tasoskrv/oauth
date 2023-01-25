@@ -48,6 +48,7 @@ const Login = (loginProps:LoginProps)=>{
                 setMessage(response.message);                
             } else {
                 window.location.href = "http://localhost:3001/";
+                // window.location.href = "https://u497761731.hostingerapp.com/cloudnet/";
             }
             setLoading(false);
         } else {
